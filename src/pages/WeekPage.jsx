@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import RatingsItem from "../components/RatingsItem";
+import { useSelector } from "react-redux";
 
 function WeekPage() {
     const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
+    const ratingsOfWeek = useSelector((state) => state.ratings.ratingsOfWeek);
 
     return (
         <div>
@@ -10,7 +12,7 @@ function WeekPage() {
             <ul>
                 {daysOfWeek.map((dayOfWeek, idx) => (
                     <li key={idx}>
-                        <RatingsItem dayOfWeek={dayOfWeek} />
+                        <RatingsItem dayOfWeek={dayOfWeek} ratings={ratingsOfWeek[dayOfWeek]} />
                         <div>
                             <Link to={`/thisWeek/${dayOfWeek}`}>수정</Link>
                         </div>

@@ -1,24 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import formattingDate from "../../commons/formattingDate";
 
-const todayOfWeek = new Date().getDay();
-let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
-daysOfWeek = [...daysOfWeek.slice(todayOfWeek), ...daysOfWeek.slice(0, todayOfWeek)];
-
-const ratingsOfWeek = daysOfWeek.reduce((acc, dayOfWeek, idx) => {
-    const date = formattingDate(new Date(new Date().setDate(new Date().getDate() + idx)));
-    return { ...acc, [dayOfWeek]: { ratings: 0, date } };
-}, {});
+const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
 const initialState = {
-    daysOfWeek,
-    ratingsOfWeek,
+    week: daysOfWeek,
+    ratingsOfWeek: daysOfWeek.reduce((acc, dayOfWeek, idx) => ({ ...acc, [dayOfWeek]: { ratings: 0, date: null } }), {}),
 };
 
 const ratingsSlice = createSlice({
     name: "ratings",
     initialState,
     reducers: {
+        setWeek: (state, action) => {
+            const day = action.payload;
+            state.week = [...daysOfWeek.slice(day), ...daysOfWeek.slice(0, day)];
+        },
         setRatings: (state, action) => {
             const { dayOfWeek, ratings } = action.payload;
             state.ratingsOfWeek[dayOfWeek].ratings = ratings;
@@ -26,5 +22,5 @@ const ratingsSlice = createSlice({
     },
 });
 
-export const { setRatings } = ratingsSlice.actions;
+export const { setRatings, setWeek } = ratingsSlice.actions;
 export default ratingsSlice.reducer;

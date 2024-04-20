@@ -1,33 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import RatingsItem from "../components/RatingsItem";
 import { useSelector, useDispatch } from "react-redux";
-import { setRatings } from "../redux/slices/ratings";
+import { setRatings, setWeek } from "../redux/slices/ratings";
 import { styled } from "styled-components";
 import getHistory from "../network/getHistory";
-import filteringForWeek from "../commons/filteringForWeek";
+import filteringForWeek, { nextDate } from "../commons/filteringForWeek";
 
 function WeekPage() {
-    const daysOfWeek = useSelector((state) => state.ratings.daysOfWeek);
-    const ratingsOfWeek = useSelector((state) => state.ratings.ratingsOfWeek);
-
     const dispatch = useDispatch();
+    const week = useSelector((state) => state.ratings.week);
+    const ratingsOfWeek = useSelector((state) => state.ratings.ratingsOfWeek);
+    const [history, setHistory] = useState(null);
 
     useEffect(() => {
-        (async () => {
-            const thisWeek = filteringForWeek(await getHistory());
-
-            thisWeek.forEach(({ dayOfWeek, rate }) => {
-                dispatch(setRatings({ dayOfWeek, ratings: rate }));
-            });
-        })();
+        (async () => setHistory(await getHistory()))();
     }, []);
+
+    useEffect(() => {
+        const date = nextDate(new Date());
+        const thisWeek = filteringForWeek(history, date);
+
+        dispatch(setWeek(date.getDay()));
+
+        thisWeek?.forEach(({ dayOfWeek, rate }) => dispatch(setRatings({ dayOfWeek, ratings: rate })));
+    }, [history]);
 
     return (
         <WeekDiv>
             <h1>일주일 컨디션</h1>
             <ul>
-                {daysOfWeek.map((dayOfWeek, idx) => (
+                {week.map((dayOfWeek, idx) => (
                     <li key={idx}>
                         <RatingsItem dayOfWeek={dayOfWeek} ratings={ratingsOfWeek[dayOfWeek].ratings} />
                         <Link className="button" to={`/thisWeek/${dayOfWeek}`} state={{ date: ratingsOfWeek[dayOfWeek].date }}>

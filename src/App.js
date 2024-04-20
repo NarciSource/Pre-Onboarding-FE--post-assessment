@@ -4,13 +4,14 @@ import { styled } from "styled-components";
 
 function App() {
     return (
-        <AppDiv>
+        <AppDiv id="app">
             <RouterProvider router={router} />
         </AppDiv>
     );
 }
 
 const AppDiv = styled.div`
+    position: relative;
     width: 400px;
     height: 400px;
     margin: 20px;

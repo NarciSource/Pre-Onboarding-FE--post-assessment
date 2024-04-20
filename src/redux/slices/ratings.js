@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { formatted } from "../../commons/filteringForWeek";
+import formattingDate from "../../commons/formattingDate";
 
 const todayOfWeek = new Date().getDay();
 let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 daysOfWeek = [...daysOfWeek.slice(todayOfWeek), ...daysOfWeek.slice(0, todayOfWeek)];
 
 const ratingsOfWeek = daysOfWeek.reduce((acc, dayOfWeek, idx) => {
-    const date = formatted(new Date(new Date().setDate(new Date().getDate() + idx)));
+    const date = formattingDate(new Date(new Date().setDate(new Date().getDate() + idx)));
     return { ...acc, [dayOfWeek]: { ratings: 0, date } };
 }, {});
 

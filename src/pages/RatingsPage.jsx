@@ -1,4 +1,4 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setRatings } from "../redux/slices/ratings";
 import useReduxState from "../hooks/useReduxState";
@@ -8,6 +8,7 @@ import postHistory from "../network/postHistory";
 
 function RatingsPage() {
     const { dayOfWeek } = useParams();
+    const navigate = useNavigate();
     const date = useLocation().state.date;
 
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ function RatingsPage() {
                 onClick={() => {
                     dispatch(setRatings({ dayOfWeek, ratings: shortlyRatings }));
                     postHistory(date, shortlyRatings);
+                    navigate(-1);
                 }}
             >
                 저장하기

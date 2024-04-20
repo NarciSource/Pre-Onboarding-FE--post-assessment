@@ -18,8 +18,8 @@ const AppDiv = styled.div`
     border: 1px solid black;
 
     h1 {
-        font-size: 15px;
-        font-weight: normal;
+        color: goldenrod;
+        font-size: 25px;
         text-align: center;
         margin-bottom: 30px;
     }
@@ -27,12 +27,13 @@ const AppDiv = styled.div`
     .button {
         cursor: pointer;
         color: white;
-        background: black;
+        background: lightcoral;
         padding: 7px 15px;
         border: none;
         border-radius: 5px;
         text-align: center;
         text-decoration-line: none;
+        font-size: 15px;
     }
 `;
 

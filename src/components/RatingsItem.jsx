@@ -21,7 +21,7 @@ function RatingsItem({ dayOfWeek, ratings, setRatings }) {
             <div className="day">{dayOfWeek}</div>
             <div className="ratings">
                 {[1, 2, 3, 4, 5].map((rating, idx) => (
-                    <FontAwesomeIcon key={idx} icon={rating <= ratings || 0 ? solidStar : regularStar} onClick={() => setRatings?.(rating)} />
+                    <FontAwesomeIcon key={idx} className="rating" icon={rating <= ratings || 0 ? solidStar : regularStar} onMouseEnter={() => setRatings?.(rating)} />
                 ))}
             </div>
         </RatingsItemDiv>
@@ -35,7 +35,8 @@ const RatingsItemDiv = styled.div`
     font-size: 15px;
 
     .day {
-        margin: 0 30px;
+        color: crimson;
+        margin-left: 30px;
     }
     .ratings {
         display: flex;
@@ -43,6 +44,7 @@ const RatingsItemDiv = styled.div`
         width: 100%;
         margin: 0 30px;
         font-size: xx-large;
+        color: wheat;
     }
 `;
 

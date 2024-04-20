@@ -39,6 +39,12 @@ const RatingsLayoutDiv = styled.div`
     .button {
         margin: 50% 35%;
     }
+    .ratings {
+        cursor: pointer;
+    }
+    .rating:hover {
+        color: gold;
+    }
 `;
 
 export default RatingsPage;

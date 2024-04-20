@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setRatings } from "../redux/slices/ratings";
 import { styled } from "styled-components";
 import getHistory from "../network/getHistory";
-import filteringForWeek from "../commons/filteringForWeek";
+import postHistory from "../network/postHistory";
+import filteringForWeek, { formatted } from "../commons/filteringForWeek";
 
 function WeekPage() {
     const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
@@ -23,6 +24,14 @@ function WeekPage() {
             });
         })();
     }, []);
+
+    useEffect(() => {
+        [...daysOfWeek.slice(todayOfWeek), ...daysOfWeek.slice(0, todayOfWeek)].forEach((dayOfWeek, idx) => {
+            const day = formatted(new Date(new Date().setDate(new Date().getDate() + idx)));
+
+            postHistory(day, ratingsOfWeek[dayOfWeek]);
+        });
+    }, [ratingsOfWeek]);
 
     return (
         <WeekDiv>

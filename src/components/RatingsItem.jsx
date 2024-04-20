@@ -1,9 +1,21 @@
+import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import styled from "styled-components";
 
 function RatingsItem({ dayOfWeek, ratings, setRatings }) {
+    useEffect(() => {
+        // rating input using number key event
+        const handlKeyDown = (event) => {
+            if (0 <= event.key && event.key <= 5) {
+                setRatings?.(event.key);
+            }
+        };
+        window.addEventListener("keydown", handlKeyDown);
+        return () => window.removeEventListener("keydown", handlKeyDown);
+    }, []);
+
     return (
         <RatingsItemDiv>
             <div className="day">{dayOfWeek}</div>

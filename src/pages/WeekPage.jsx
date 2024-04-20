@@ -1,12 +1,28 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import RatingsItem from "../components/RatingsItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setRatings } from "../redux/slices/ratings";
 import { styled } from "styled-components";
+import getHistory from "../network/getHistory";
+import filteringForWeek from "../commons/filteringForWeek";
 
 function WeekPage() {
     const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
     const todayOfWeek = new Date().getDay();
     const ratingsOfWeek = useSelector((state) => state.ratings.ratingsOfWeek);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        (async () => {
+            const thisWeek = filteringForWeek(await getHistory());
+
+            thisWeek.forEach(({ dayOfWeek, rate }) => {
+                dispatch(setRatings({ dayOfWeek, ratings: rate }));
+            });
+        })();
+    }, []);
 
     return (
         <WeekDiv>

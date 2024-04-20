@@ -5,12 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { setRatings } from "../redux/slices/ratings";
 import { styled } from "styled-components";
 import getHistory from "../network/getHistory";
-import postHistory from "../network/postHistory";
-import filteringForWeek, { formatted } from "../commons/filteringForWeek";
+import filteringForWeek from "../commons/filteringForWeek";
 
 function WeekPage() {
-    const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
-    const todayOfWeek = new Date().getDay();
+    const daysOfWeek = useSelector((state) => state.ratings.daysOfWeek);
     const ratingsOfWeek = useSelector((state) => state.ratings.ratingsOfWeek);
 
     const dispatch = useDispatch();
@@ -25,22 +23,14 @@ function WeekPage() {
         })();
     }, []);
 
-    useEffect(() => {
-        [...daysOfWeek.slice(todayOfWeek), ...daysOfWeek.slice(0, todayOfWeek)].forEach((dayOfWeek, idx) => {
-            const day = formatted(new Date(new Date().setDate(new Date().getDate() + idx)));
-
-            postHistory(day, ratingsOfWeek[dayOfWeek]);
-        });
-    }, [ratingsOfWeek]);
-
     return (
         <WeekDiv>
             <h1>일주일 컨디션</h1>
             <ul>
-                {[...daysOfWeek.slice(todayOfWeek), ...daysOfWeek.slice(0, todayOfWeek)].map((dayOfWeek, idx) => (
+                {daysOfWeek.map((dayOfWeek, idx) => (
                     <li key={idx}>
-                        <RatingsItem dayOfWeek={dayOfWeek} ratings={ratingsOfWeek[dayOfWeek]} />
-                        <Link className="button" to={`/thisWeek/${dayOfWeek}`}>
+                        <RatingsItem dayOfWeek={dayOfWeek} ratings={ratingsOfWeek[dayOfWeek].ratings} />
+                        <Link className="button" to={`/thisWeek/${dayOfWeek}`} state={{ date: ratingsOfWeek[dayOfWeek].date }}>
                             수정
                         </Link>
                     </li>

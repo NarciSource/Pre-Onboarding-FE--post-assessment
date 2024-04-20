@@ -1,9 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { formatted } from "../../commons/filteringForWeek";
 
-const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
+const todayOfWeek = new Date().getDay();
+let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+daysOfWeek = [...daysOfWeek.slice(todayOfWeek), ...daysOfWeek.slice(0, todayOfWeek)];
+
+const ratingsOfWeek = daysOfWeek.reduce((acc, dayOfWeek, idx) => {
+    const date = formatted(new Date(new Date().setDate(new Date().getDate() + idx)));
+    return { ...acc, [dayOfWeek]: { ratings: 0, date } };
+}, {});
+
 const initialState = {
-    today: "월",
-    ratingsOfWeek: daysOfWeek.reduce((acc, dayOfWeek) => ({ ...acc, [dayOfWeek]: 0 }), {}),
+    daysOfWeek,
+    ratingsOfWeek,
 };
 
 const ratingsSlice = createSlice({
@@ -12,7 +21,7 @@ const ratingsSlice = createSlice({
     reducers: {
         setRatings: (state, action) => {
             const { dayOfWeek, ratings } = action.payload;
-            state.ratingsOfWeek[dayOfWeek] = ratings;
+            state.ratingsOfWeek[dayOfWeek].ratings = ratings;
         },
     },
 });

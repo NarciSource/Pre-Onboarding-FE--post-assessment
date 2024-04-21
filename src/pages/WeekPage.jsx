@@ -1,35 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
 import RatingsItem from "../components/RatingsItem";
-import { useSelector, useDispatch } from "react-redux";
-import { setRatings, setWeek } from "../redux/slices/ratings";
+import LoadData from "../components/LoadData";
+import { stepDate } from "../commons/filteringForWeek";
+
 import { styled } from "styled-components";
-import getHistory from "../network/getHistory";
-import filteringForWeek, { stepDate } from "../commons/filteringForWeek";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function WeekPage() {
-    const dispatch = useDispatch();
     const week = useSelector((state) => state.ratings.week);
     const ratingsOfWeek = useSelector((state) => state.ratings.ratingsOfWeek);
-    const [history, setHistory] = useState(null);
     const [date, setDate] = useState(new Date());
-
-    useEffect(() => {
-        (async () => setHistory(await getHistory()))();
-    }, []);
-
-    useEffect(() => {
-        const thisWeek = filteringForWeek(history, date);
-
-        dispatch(setWeek(date.getDay()));
-
-        thisWeek && Object.entries(thisWeek).forEach(([dayOfWeek, { rate, date }], idx) => dispatch(setRatings({ dayOfWeek, ratings: rate, date })));
-    }, [date, history]);
 
     return (
         <WeekDiv>
+            <LoadData date={date} />
+
             <div className="arrows">
                 <FontAwesomeIcon className="button" icon={faArrowLeft} onClick={() => setDate(stepDate(date)(-7))} />
                 <h1>

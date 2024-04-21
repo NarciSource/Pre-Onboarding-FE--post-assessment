@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import WeekPage from "../pages/WeekPage";
-import RatingsPage from "../pages/RatingsPage";
+import RatingPage from "../pages/RatingPage";
 
 const router = createBrowserRouter([
     {
@@ -8,8 +8,8 @@ const router = createBrowserRouter([
         element: <WeekPage />,
     },
     {
-        path: "/thisWeek/:dayOfWeek",
-        element: <RatingsPage />,
+        path: "/thisWeek/:day",
+        element: <RatingPage />,
     },
 ]);
 

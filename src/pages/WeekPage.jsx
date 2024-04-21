@@ -2,36 +2,35 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import RatingsItem from "../components/RatingsItem";
-import LoadData from "../components/LoadData";
-import { stepDate } from "../commons/filteringForWeek";
+import RatingItem from "../components/RatingItem";
+import LoadExternalData from "../components/LoadExternalData";
+import jumpDate from "../commons/jumpDate";
 
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function WeekPage() {
-    const week = useSelector((state) => state.ratings.week);
-    const ratingsOfWeek = useSelector((state) => state.ratings.ratingsOfWeek);
+    const { week, bio } = useSelector((state) => state.weeklyBio);
     const [date, setDate] = useState(new Date());
 
     return (
         <WeekDiv>
-            <LoadData date={date} />
+            <LoadExternalData date={date} />
 
             <div className="arrows">
-                <FontAwesomeIcon className="button" icon={faArrowLeft} onClick={() => setDate(stepDate(date)(-7))} />
+                <FontAwesomeIcon className="button" icon={faArrowLeft} onClick={() => setDate(jumpDate(date)(-7))} />
                 <h1>
-                    <small>{ratingsOfWeek[week[0]].date}</small>
+                    <small>{bio[week[0]].date}</small>
                     일주일 컨디션
                 </h1>
-                <FontAwesomeIcon className="button" icon={faArrowRight} onClick={() => setDate(stepDate(date)(7))} />
+                <FontAwesomeIcon className="button" icon={faArrowRight} onClick={() => setDate(jumpDate(date)(7))} />
             </div>
             <ul>
-                {week.map((dayOfWeek, idx) => (
+                {week.map((day, idx) => (
                     <li key={idx}>
-                        <RatingsItem dayOfWeek={dayOfWeek} date={ratingsOfWeek[dayOfWeek].date} ratings={ratingsOfWeek[dayOfWeek].ratings} />
-                        <Link className="button" to={`/thisWeek/${dayOfWeek}`} state={{ date: ratingsOfWeek[dayOfWeek].date }}>
+                        <RatingItem day={day} date={bio[day].date} rating={bio[day].rating} />
+                        <Link className="button" to={`/thisWeek/${day}`} state={{ date: bio[day].date }}>
                             수정
                         </Link>
                     </li>

@@ -6,16 +6,16 @@ import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import NoticeRating from "./modal/NoticeRating";
 import styled from "styled-components";
 
-function RatingsItem({ dayOfWeek, ratings, setRatings, date }) {
+function RatingItem({ day, rating, setRating, date }) {
     const [showModal, setShowModal] = useState(false);
 
-    const handleRatingsChange = setRatings && ((value) => setRatings(value) & setShowModal(true));
+    const handleRatingChange = setRating && ((value) => setRating(value) & setShowModal(true));
 
     useEffect(() => {
         // rating input using number key event
         const handlKeyDown = (event) => {
             if (0 <= event.key && event.key <= 5) {
-                handleRatingsChange?.(event.key);
+                handleRatingChange?.(event.key);
             }
         };
 
@@ -24,21 +24,21 @@ function RatingsItem({ dayOfWeek, ratings, setRatings, date }) {
     }, []);
 
     return (
-        <RatingsItemDiv title={date}>
-            <div className="day">{dayOfWeek}</div>
+        <RatingItemDiv title={date}>
+            <div className="day">{day}</div>
 
-            <div className="ratings">
-                {[1, 2, 3, 4, 5].map((rating, idx) => (
-                    <FontAwesomeIcon key={idx} className="rating" icon={rating <= ratings ? solidStar : regularStar} onMouseEnter={() => handleRatingsChange?.(rating)} />
+            <div className="rating">
+                {[1, 2, 3, 4, 5].map((score, idx) => (
+                    <FontAwesomeIcon key={idx} icon={score <= rating ? solidStar : regularStar} onMouseEnter={() => handleRatingChange?.(score)} />
                 ))}
             </div>
 
-            {showModal && createPortal(<NoticeRating ratings={ratings} onClose={() => setShowModal(false)} />, document.getElementById("app"))}
-        </RatingsItemDiv>
+            {showModal && createPortal(<NoticeRating rating={rating} onClose={() => setShowModal(false)} />, document.getElementById("app"))}
+        </RatingItemDiv>
     );
 }
 
-const RatingsItemDiv = styled.div`
+const RatingItemDiv = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
@@ -48,7 +48,7 @@ const RatingsItemDiv = styled.div`
         color: crimson;
         margin-left: 30px;
     }
-    .ratings {
+    .rating {
         display: flex;
         justify-content: space-between;
         width: 100%;
@@ -58,4 +58,4 @@ const RatingsItemDiv = styled.div`
     }
 `;
 
-export default RatingsItem;
+export default RatingItem;

@@ -1,11 +1,9 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
-import ratings from "./slices/ratings";
-import history from "./slices/history";
+import weeklyBio from "./slices/weeklyBio";
 
 const rootReducer = combineReducers({
-    ratings,
-    history,
+    weeklyBio,
 });
 
 export default configureStore({ reducer: rootReducer });

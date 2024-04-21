@@ -1,4 +1,4 @@
-const formattingDate = (date) =>
+const formatDateYYYYMMDD = (date) =>
     new Date(date)
         .toLocaleDateString("ko-KR", {
             year: "numeric",
@@ -8,4 +8,4 @@ const formattingDate = (date) =>
         .replaceAll(".", "")
         .replaceAll(" ", "-");
 
-export default formattingDate;
+export default formatDateYYYYMMDD;

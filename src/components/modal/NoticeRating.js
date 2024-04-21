@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function NoticeRating({ ratings, onClose }) {
+export default function NoticeRating({ rating, onClose }) {
     const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -17,7 +17,7 @@ export default function NoticeRating({ ratings, onClose }) {
         return () => clearTimeout(timer);
     }, [onClose]);
 
-    return <ModalDiv className={showModal && "activate"}>{ratings}점!</ModalDiv>;
+    return <ModalDiv className={showModal && "activate"}>{rating}점!</ModalDiv>;
 }
 
 const ModalDiv = styled.div`

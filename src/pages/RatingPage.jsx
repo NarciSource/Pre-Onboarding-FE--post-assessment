@@ -1,41 +1,43 @@
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setRatings } from "../redux/slices/ratings";
+import { setRating } from "../redux/slices/weeklyBio";
 import useReduxState from "../hooks/useReduxState";
-import RatingsItem from "../components/RatingsItem";
-import styled from "styled-components";
+
+import RatingItem from "../components/RatingItem";
 import postHistory from "../network/postHistory";
 
-function RatingsPage() {
-    const { dayOfWeek } = useParams();
+import styled from "styled-components";
+
+function RatingPage() {
     const navigate = useNavigate();
+    const { day } = useParams();
     const date = useLocation().state.date;
 
     const dispatch = useDispatch();
-    const [shortlyRatings, setShortlyRatings] = useReduxState((state) => state.ratings.ratingsOfWeek[dayOfWeek].ratings);
+    const [shortlyRating, setShortlyRating] = useReduxState((state) => state.weeklyBio.bio[day].rating);
 
     return (
-        <RatingsLayoutDiv>
+        <RatingLayoutDiv>
             <h1>
                 <small>{date}</small>
-                {dayOfWeek}요일 평점 매기기
+                {day}요일 평점 매기기
             </h1>
-            <RatingsItem dayOfWeek={dayOfWeek} ratings={shortlyRatings} setRatings={setShortlyRatings} />
+            <RatingItem day={day} rating={shortlyRating} setRating={setShortlyRating} />
             <button
                 className="button"
                 onClick={() => {
-                    dispatch(setRatings({ dayOfWeek, ratings: shortlyRatings }));
-                    postHistory(date, shortlyRatings);
+                    dispatch(setRating({ day, rating: shortlyRating }));
+                    postHistory(date, shortlyRating);
                     navigate(-1);
                 }}
             >
                 저장하기
             </button>
-        </RatingsLayoutDiv>
+        </RatingLayoutDiv>
     );
 }
 
-const RatingsLayoutDiv = styled.div`
+const RatingLayoutDiv = styled.div`
     display: flex;
     flex-direction: column;
 
@@ -50,7 +52,7 @@ const RatingsLayoutDiv = styled.div`
     .button {
         margin: 50% 35%;
     }
-    .ratings {
+    .rating {
         cursor: pointer;
     }
     .rating:hover {
@@ -58,4 +60,4 @@ const RatingsLayoutDiv = styled.div`
     }
 `;
 
-export default RatingsPage;
+export default RatingPage;

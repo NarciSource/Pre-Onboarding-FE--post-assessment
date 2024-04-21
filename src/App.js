@@ -26,6 +26,7 @@ const AppDiv = styled.div`
     }
 
     .button {
+        opacity: 0.8;
         cursor: pointer;
         color: white;
         background: lightcoral;
@@ -35,6 +36,9 @@ const AppDiv = styled.div`
         text-align: center;
         text-decoration-line: none;
         font-size: 15px;
+    }
+    .button:hover {
+        opacity: 1;
     }
 `;
 

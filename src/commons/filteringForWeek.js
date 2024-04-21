@@ -1,19 +1,31 @@
 import formattingDate from "./formattingDate";
 
-const nextDate = (date, step = 0) => new Date(new Date().setDate(date.getDate() + step));
+const stepDate =
+    (date) =>
+    (step = 0) =>
+        new Date(new Date(date).setDate(date.getDate() + step));
+
+function getWeek(date, period = 0) {
+    return [...Array(Math.abs(period))].map((_, i) => (period > 0 ? i : -i)).map(stepDate(date));
+}
 
 function filteringForWeek(data, pivotDate) {
     const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+    const formatting = (acc, { date, rate = 0 }) => ({ ...acc, [daysOfWeek[new Date(date).getDay()]]: { rate, date } });
+    const isIn = (v) => (a, b) => a < b ? a <= v && v <= b : b <= v && v <= a;
 
-    const today = formattingDate(pivotDate);
-    const before7day = formattingDate(nextDate(pivotDate, -7));
+    const period = -7;
+    const week = getWeek(pivotDate, period);
+    const today = formattingDate(week[0]);
+    const lastday = formattingDate(week[week.length - 1]);
 
-    const initial = daysOfWeek.reduce((acc, day) => ({ ...acc, [day]: { rate: 0, date: null } }), {});
+    const initial = week
+        .map(formattingDate)
+        .map((date) => ({ date }))
+        .reduce(formatting, {});
 
-    const thisWeekData = data?.filter(({ date }) => before7day <= date && date <= today).reduce((acc, { date, rate }) => ({ ...acc, [daysOfWeek[new Date(date).getDay()]]: { rate, date } }), initial);
-
-    return thisWeekData;
+    return data?.filter(({ date }) => isIn(date)(today, lastday)).reduce(formatting, initial);
 }
 
-export { nextDate };
+export { stepDate };
 export default filteringForWeek;

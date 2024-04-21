@@ -24,10 +24,8 @@ function RatingsItem({ dayOfWeek, ratings, setRatings, date }) {
     }, []);
 
     return (
-        <RatingsItemDiv>
-            <div className="day" title={date}>
-                {dayOfWeek}
-            </div>
+        <RatingsItemDiv title={date}>
+            <div className="day">{dayOfWeek}</div>
 
             <div className="ratings">
                 {[1, 2, 3, 4, 5].map((rating, idx) => (

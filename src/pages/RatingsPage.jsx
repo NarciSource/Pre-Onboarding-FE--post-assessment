@@ -16,7 +16,10 @@ function RatingsPage() {
 
     return (
         <RatingsLayoutDiv>
-            <h1>{dayOfWeek}요일 평점 매기기</h1>
+            <h1>
+                <small>{date}</small>
+                {dayOfWeek}요일 평점 매기기
+            </h1>
             <RatingsItem dayOfWeek={dayOfWeek} ratings={shortlyRatings} setRatings={setShortlyRatings} />
             <button
                 className="button"
@@ -36,6 +39,14 @@ const RatingsLayoutDiv = styled.div`
     display: flex;
     flex-direction: column;
 
+    h1 {
+        display: flex;
+        flex-direction: column;
+
+        small {
+            font-size: small;
+        }
+    }
     .button {
         margin: 50% 35%;
     }

@@ -5,7 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setRatings, setWeek } from "../redux/slices/ratings";
 import { styled } from "styled-components";
 import getHistory from "../network/getHistory";
-import filteringForWeek, { nextDate } from "../commons/filteringForWeek";
+import filteringForWeek, { stepDate } from "../commons/filteringForWeek";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function WeekPage() {
     const dispatch = useDispatch();
@@ -28,10 +30,13 @@ function WeekPage() {
 
     return (
         <WeekDiv>
-            <h1>일주일 컨디션 {date.toLocaleString()}</h1>
-            <div>
-                <button onClick={() => setDate(nextDate(date, -7))}>이전주</button>
-                <button onClick={() => setDate(nextDate(date, 7))}>다음주</button>
+            <div className="arrows">
+                <FontAwesomeIcon className="button" icon={faArrowLeft} onClick={() => setDate(stepDate(date)(-7))} />
+                <h1>
+                    <small>{ratingsOfWeek[week[0]].date}</small>
+                    일주일 컨디션
+                </h1>
+                <FontAwesomeIcon className="button" icon={faArrowRight} onClick={() => setDate(stepDate(date)(7))} />
             </div>
             <ul>
                 {week.map((dayOfWeek, idx) => (
@@ -48,6 +53,14 @@ function WeekPage() {
 }
 
 const WeekDiv = styled.div`
+    h1 {
+        display: flex;
+        flex-direction: column;
+
+        small {
+            font-size: small;
+        }
+    }
     ul {
         padding: 0;
         list-style: none;
@@ -56,6 +69,17 @@ const WeekDiv = styled.div`
         display: flex;
         justify-content: space-between;
         margin: 10px 0;
+    }
+
+    .arrows {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .button {
+            padding: 7px;
+            background: goldenrod;
+        }
     }
 
     .modify-button {

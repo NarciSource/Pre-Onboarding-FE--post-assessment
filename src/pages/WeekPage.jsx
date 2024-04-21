@@ -14,17 +14,19 @@ function WeekPage() {
     const { week, bio } = useSelector((state) => state.weeklyBio);
     const [date, setDate] = useState(new Date());
 
+    const displayedDateCount = -7;
+
     return (
         <WeekDiv>
-            <LoadExternalData date={date} />
+            <LoadExternalData date={date} period={displayedDateCount} />
 
             <div className="arrows">
-                <FontAwesomeIcon className="button" icon={faArrowLeft} onClick={() => setDate(jumpDate(date)(-7))} />
+                <FontAwesomeIcon className="button" icon={faArrowLeft} onClick={() => setDate(jumpDate(date)(-Math.abs(displayedDateCount)))} />
                 <h1>
                     <small>{bio[week[0]].date}</small>
                     일주일 컨디션
                 </h1>
-                <FontAwesomeIcon className="button" icon={faArrowRight} onClick={() => setDate(jumpDate(date)(7))} />
+                <FontAwesomeIcon className="button" icon={faArrowRight} onClick={() => setDate(jumpDate(date)(Math.abs(displayedDateCount)))} />
             </div>
             <ul>
                 {week.map((day, idx) => (

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { defaultWeek, shiftWeekByDayOfWeek } from "../../commons/dayOfWeek";
+import { defaultWeek } from "../../commons/dayOfWeek";
 
 const initialState = {
     week: defaultWeek,
@@ -12,7 +12,7 @@ const ratingsSlice = createSlice({
     initialState,
     reducers: {
         setWeek: (state, action) => {
-            state.week = shiftWeekByDayOfWeek(action.payload);
+            state.week = action.payload;
         },
         setRating: (state, action) => {
             const { day, rating, date } = action.payload;

@@ -12,27 +12,31 @@ function WeekPage() {
     const week = useSelector((state) => state.ratings.week);
     const ratingsOfWeek = useSelector((state) => state.ratings.ratingsOfWeek);
     const [history, setHistory] = useState(null);
+    const [date, setDate] = useState(new Date());
 
     useEffect(() => {
         (async () => setHistory(await getHistory()))();
     }, []);
 
     useEffect(() => {
-        const date = nextDate(new Date());
         const thisWeek = filteringForWeek(history, date);
 
         dispatch(setWeek(date.getDay()));
 
-        thisWeek?.forEach(({ dayOfWeek, rate }) => dispatch(setRatings({ dayOfWeek, ratings: rate })));
-    }, [history]);
+        thisWeek && Object.entries(thisWeek).forEach(([dayOfWeek, { rate, date }], idx) => dispatch(setRatings({ dayOfWeek, ratings: rate, date })));
+    }, [date, history]);
 
     return (
         <WeekDiv>
-            <h1>일주일 컨디션</h1>
+            <h1>일주일 컨디션 {date.toLocaleString()}</h1>
+            <div>
+                <button onClick={() => setDate(nextDate(date, -7))}>이전주</button>
+                <button onClick={() => setDate(nextDate(date, 7))}>다음주</button>
+            </div>
             <ul>
                 {week.map((dayOfWeek, idx) => (
                     <li key={idx}>
-                        <RatingsItem dayOfWeek={dayOfWeek} ratings={ratingsOfWeek[dayOfWeek].ratings} />
+                        <RatingsItem dayOfWeek={dayOfWeek} date={ratingsOfWeek[dayOfWeek].date} ratings={ratingsOfWeek[dayOfWeek].ratings} />
                         <Link className="button" to={`/thisWeek/${dayOfWeek}`} state={{ date: ratingsOfWeek[dayOfWeek].date }}>
                             수정
                         </Link>

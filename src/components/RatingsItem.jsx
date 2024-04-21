@@ -6,7 +6,7 @@ import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import NoticeRating from "./modal/NoticeRating";
 import styled from "styled-components";
 
-function RatingsItem({ dayOfWeek, ratings, setRatings }) {
+function RatingsItem({ dayOfWeek, ratings, setRatings, date }) {
     const [showModal, setShowModal] = useState(false);
 
     const handleRatingsChange = setRatings && ((value) => setRatings(value) & setShowModal(true));
@@ -25,7 +25,9 @@ function RatingsItem({ dayOfWeek, ratings, setRatings }) {
 
     return (
         <RatingsItemDiv>
-            <div className="day">{dayOfWeek}</div>
+            <div className="day" title={date}>
+                {dayOfWeek}
+            </div>
 
             <div className="ratings">
                 {[1, 2, 3, 4, 5].map((rating, idx) => (

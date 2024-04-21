@@ -16,8 +16,10 @@ const ratingsSlice = createSlice({
             state.week = [...daysOfWeek.slice(day), ...daysOfWeek.slice(0, day)];
         },
         setRatings: (state, action) => {
-            const { dayOfWeek, ratings } = action.payload;
+            const { dayOfWeek, ratings, date } = action.payload;
+
             state.ratingsOfWeek[dayOfWeek].ratings = ratings;
+            state.ratingsOfWeek[dayOfWeek].date = date;
         },
     },
 });

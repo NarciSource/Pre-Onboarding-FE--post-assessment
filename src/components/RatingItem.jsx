@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import NoticeRating from "./modal/NoticeRating";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const RatingItem = forwardRef(({ day, rating, date, editable }, ref) => {
     const [showModal, setShowModal] = useState(false);
@@ -30,7 +30,7 @@ const RatingItem = forwardRef(({ day, rating, date, editable }, ref) => {
     }, []);
 
     return (
-        <RatingItemDiv title={date}>
+        <RatingItemDiv title={date} $editable={editable}>
             <div className="day">{day}</div>
 
             <div className="rating">
@@ -62,6 +62,16 @@ const RatingItemDiv = styled.div`
         font-size: xx-large;
         color: wheat;
     }
+    ${(props) =>
+        props.$editable &&
+        css`
+            .rating {
+                cursor: pointer;
+            }
+            .rating:hover {
+                color: gold;
+            }
+        `}
 `;
 
 export default RatingItem;

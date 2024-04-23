@@ -54,12 +54,6 @@ const RatingLayoutDiv = styled.div`
     .button {
         margin: 50% 35%;
     }
-    .rating {
-        cursor: pointer;
-    }
-    .rating:hover {
-        color: gold;
-    }
 `;
 
 export default RatingPage;

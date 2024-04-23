@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
@@ -6,10 +6,16 @@ import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import NoticeRating from "./modal/NoticeRating";
 import styled from "styled-components";
 
-function RatingItem({ day, rating, setRating, date }) {
+const RatingItem = forwardRef(({ day, rating, date, editable }, ref) => {
     const [showModal, setShowModal] = useState(false);
+    const [shortlyRating, setShortlyRating] = useState(rating);
 
-    const handleRatingChange = setRating && ((value) => setRating(value) & setShowModal(true));
+    useEffect(() => setShortlyRating(rating), [rating]);
+    useImperativeHandle(ref, () => ({
+        getRating: () => shortlyRating,
+    }));
+
+    const handleRatingChange = (editable || undefined) && ((value) => setShortlyRating(value) & setShowModal(true));
 
     useEffect(() => {
         // rating input using number key event
@@ -29,14 +35,14 @@ function RatingItem({ day, rating, setRating, date }) {
 
             <div className="rating">
                 {[1, 2, 3, 4, 5].map((score, idx) => (
-                    <FontAwesomeIcon key={idx} icon={score <= rating ? solidStar : regularStar} onMouseEnter={() => handleRatingChange?.(score)} />
+                    <FontAwesomeIcon key={idx} icon={score <= shortlyRating ? solidStar : regularStar} onMouseEnter={() => handleRatingChange?.(score)} />
                 ))}
             </div>
 
-            {showModal && createPortal(<NoticeRating rating={rating} onClose={() => setShowModal(false)} />, document.getElementById("app"))}
+            {showModal && createPortal(<NoticeRating rating={shortlyRating} onClose={() => setShowModal(false)} />, document.getElementById("app"))}
         </RatingItemDiv>
     );
-}
+});
 
 const RatingItemDiv = styled.div`
     display: flex;

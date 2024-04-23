@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -12,21 +12,31 @@ import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function WeekPage() {
     const { week, bio } = useSelector((state) => state.weeklyBio);
-    const [date, setDate] = useState(new Date());
 
     const displayedDateCount = -7;
+    const [pivotDate, piovtDateDispatch] = useReducer((state, action) => {
+        const jumpDateIn = jumpDate(state);
+        switch (action.type) {
+            case "Previous-Week":
+                return jumpDateIn(-Math.abs(displayedDateCount));
+            case "Next-Week":
+                return jumpDateIn(Math.abs(displayedDateCount));
+            default:
+                return state;
+        }
+    }, new Date());
 
     return (
         <WeekDiv>
-            <LoadExternalData date={date} period={displayedDateCount} />
+            <LoadExternalData pivotDate={pivotDate} period={displayedDateCount} />
 
             <div className="arrows">
-                <FontAwesomeIcon className="button" icon={faArrowLeft} onClick={() => setDate(jumpDate(date)(-Math.abs(displayedDateCount)))} />
+                <FontAwesomeIcon className="button" icon={faArrowLeft} onClick={() => piovtDateDispatch({ type: "Previous-Week" })} />
                 <h1>
                     <small>{bio[week[0]].date}</small>
                     일주일 컨디션
                 </h1>
-                <FontAwesomeIcon className="button" icon={faArrowRight} onClick={() => setDate(jumpDate(date)(Math.abs(displayedDateCount)))} />
+                <FontAwesomeIcon className="button" icon={faArrowRight} onClick={() => piovtDateDispatch({ type: "Next-Week" })} />
             </div>
             <ul>
                 {week.map((day, idx) => (

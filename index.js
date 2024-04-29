@@ -1,6 +1,7 @@
 import http from "http";
 import dotenv from "dotenv";
 import fs from "fs";
+import crypto from "crypto";
 
 dotenv.config();
 
@@ -23,7 +24,27 @@ http.createServer((req, res) => {
             });
 
         case "POST":
-            return;
+            return req.on("data", (body) => {
+                const target = JSON.parse(body);
+
+                return fs.readFile(dbpath, (err, data) => {
+                    if (err) {
+                        throw err;
+                    }
+
+                    const jsonData = JSON.parse(data);
+                    const foundList = jsonData[pathname];
+
+                    foundList.push({
+                        id: crypto.randomBytes(1).toString("hex"),
+                        ...target,
+                    });
+
+                    fs.writeFile(dbpath, JSON.stringify(jsonData), () => {});
+
+                    res.end("successful");
+                });
+            });
 
         default:
             return;

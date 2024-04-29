@@ -9,6 +9,10 @@ http.createServer((req, res) => {
     const dbpath = "./db.json";
     const pathname = "biological-rhythm";
 
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
     switch (req.method) {
         case "GET":
             return fs.readFile(dbpath, (err, data) => {
@@ -45,6 +49,10 @@ http.createServer((req, res) => {
                     res.end("successful");
                 });
             });
+
+        case "OPTIONS":
+            res.writeHead(204); // No Content
+            return res.end();
 
         default:
             return;

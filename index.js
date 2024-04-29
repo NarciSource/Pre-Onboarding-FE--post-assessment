@@ -1,13 +1,31 @@
 import http from "http";
+import url from "url";
 import dotenv from "dotenv";
 import { promises as fs } from "fs";
 import crypto from "crypto";
 
 dotenv.config();
 
+function upsert(list, key, value, target) {
+    const index = list.findIndex((item) => item[key] === value);
+    const changedList = JSON.parse(JSON.stringify(list));
+
+    if (index !== -1) {
+        changedList[index] = { ...list[index], ...target };
+    } else {
+        changedList.push({
+            id: crypto.randomBytes(1).toString("hex"),
+            ...target,
+        });
+    }
+    return changedList;
+}
+
 http.createServer(async (req, res) => {
     const dbpath = "./db.json";
-    const pathname = "biological-rhythm";
+    let { pathname, query } = url.parse(req.url, true);
+    pathname = pathname.replace("/", "");
+    const key = "date";
 
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -32,10 +50,8 @@ http.createServer(async (req, res) => {
                 const jsonData = JSON.parse(data);
                 const foundList = jsonData[pathname];
 
-                foundList.push({
-                    id: crypto.randomBytes(1).toString("hex"),
-                    ...target,
-                });
+                const changedList = upsert(foundList, key, target[key], target);
+                jsonData[pathname] = changedList;
 
                 fs.writeFile(dbpath, JSON.stringify(jsonData), () => {});
 

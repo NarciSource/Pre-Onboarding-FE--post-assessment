@@ -1,11 +1,11 @@
 import http from "http";
 import dotenv from "dotenv";
-import fs from "fs";
+import { promises as fs } from "fs";
 import crypto from "crypto";
 
 dotenv.config();
 
-http.createServer((req, res) => {
+http.createServer(async (req, res) => {
     const dbpath = "./db.json";
     const pathname = "biological-rhythm";
 
@@ -15,39 +15,31 @@ http.createServer((req, res) => {
 
     switch (req.method) {
         case "GET":
-            return fs.readFile(dbpath, (err, data) => {
-                if (err) {
-                    throw err;
-                }
+            const data = await fs.readFile(dbpath);
+            const jsonData = JSON.parse(data);
+            const foundList = jsonData[pathname];
 
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify(foundList));
+
+            return;
+
+        case "POST":
+            return req.on("data", async (body) => {
+                const target = JSON.parse(body);
+
+                const data = await fs.readFile(dbpath);
                 const jsonData = JSON.parse(data);
                 const foundList = jsonData[pathname];
 
-                res.setHeader("Content-Type", "application/json");
-                res.end(JSON.stringify(foundList));
-            });
-
-        case "POST":
-            return req.on("data", (body) => {
-                const target = JSON.parse(body);
-
-                return fs.readFile(dbpath, (err, data) => {
-                    if (err) {
-                        throw err;
-                    }
-
-                    const jsonData = JSON.parse(data);
-                    const foundList = jsonData[pathname];
-
-                    foundList.push({
-                        id: crypto.randomBytes(1).toString("hex"),
-                        ...target,
-                    });
-
-                    fs.writeFile(dbpath, JSON.stringify(jsonData), () => {});
-
-                    res.end("successful");
+                foundList.push({
+                    id: crypto.randomBytes(1).toString("hex"),
+                    ...target,
                 });
+
+                fs.writeFile(dbpath, JSON.stringify(jsonData), () => {});
+
+                res.end("successful");
             });
 
         case "OPTIONS":

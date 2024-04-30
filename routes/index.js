@@ -15,10 +15,11 @@ async function upsert(table, key, target) {
 
 router.get("/:pathname", async function (req, res, next) {
     const { pathname } = req.params;
+    const { key, gte, lte } = req.query;
     const table = pathname.replace("-", "_");
 
     try {
-        const found_list = await dbClient(table);
+        const found_list = await dbClient(table).whereBetween(key, [gte || "0", lte || "Z"]);
 
         res.setHeader("Content-Type", "application/json");
         res.json(found_list);
@@ -31,8 +32,8 @@ router.get("/:pathname", async function (req, res, next) {
 
 router.post("/:pathname", async function (req, res, next) {
     const { pathname } = req.params;
+    const { key } = req.query;
     const table = pathname.replace("-", "_");
-    const key = "date";
     const target = req.body;
 
     try {

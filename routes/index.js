@@ -1,61 +1,48 @@
 import { Router } from "express";
-import fs from "fs";
-import crypto from "crypto";
+import dbClient from "../db/dbClient.js";
 
 var router = Router();
 
-function upsert(list, key, value, target) {
-    const index = list.findIndex((item) => item[key] === value);
-    const changedList = JSON.parse(JSON.stringify(list));
+async function upsert(table, key, target) {
+    const isExist = await dbClient(table).where(key, target[key]).first();
 
-    if (index !== -1) {
-        changedList[index] = { ...list[index], ...target };
+    if (isExist) {
+        await dbClient(table).where(key, target[key]).update(target);
     } else {
-        changedList.push({
-            id: crypto.randomBytes(1).toString("hex"),
-            ...target,
-        });
+        await dbClient(table).insert(target);
     }
-    return changedList;
 }
 
-router.get("/:pathname", function (req, res, next) {
+router.get("/:pathname", async function (req, res, next) {
     const { pathname } = req.params;
+    const table = pathname.replace("-", "_");
 
-    fs.readFile("./db.json", (err, data) => {
-        if (err) {
-            throw err;
-        }
-
-        const json_data = JSON.parse(data);
-        const found_list = json_data[pathname];
+    try {
+        const found_list = await dbClient(table);
 
         res.setHeader("Content-Type", "application/json");
         res.json(found_list);
-    });
+    } catch (_) {
+        const error = new Error("No exist.");
+        error.status = 404;
+        return next(error);
+    }
 });
 
-router.post("/:pathname", function (req, res, next) {
+router.post("/:pathname", async function (req, res, next) {
     const { pathname } = req.params;
+    const table = pathname.replace("-", "_");
     const key = "date";
+    const target = req.body;
 
-    var target = req.body;
-
-    return fs.readFile("./db.json", (err, data) => {
-        if (err) {
-            throw err;
-        }
-
-        const json_data = JSON.parse(data);
-        const found_list = json_data[pathname];
-
-        const changed_list = upsert(found_list, key, target[key], target);
-
-        json_data[pathname] = changed_list;
-        fs.writeFile("./db.json", JSON.stringify(json_data), () => {});
-
+    try {
+        await upsert(table, key, target);
         res.end("successful");
-    });
+    } catch (_) {
+        const error = new Error("No exist.");
+        error.status = 404;
+        return next(error);
+    }
 });
 
 router.options("/:pathname", function (req, res, next) {

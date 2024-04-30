@@ -1,7 +1,7 @@
 import axios from "axios";
 
-async function getHistory() {
-    const url = `http://localhost:5001/biological-rhythm`;
+async function getHistory({ key, gte = "", lte = "" }) {
+    const url = `http://localhost:5001/biological-rhythm?key=${key}&gte=${gte}&lte=${lte}`;
 
     const response = await axios({
         method: "get",

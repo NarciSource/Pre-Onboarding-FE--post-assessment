@@ -15,11 +15,8 @@
 ## 🛠️ 기술 스택
 - ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![CSS](https://img.shields.io/badge/CSS3-%231572B6?style=flat-square&logo=css3&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-%23E34F26?style=flat-square&logo=html5&logoColor=white) [![Axios](https://img.shields.io/badge/Axios-%235A29E4?style=flat-square&logo=axios)](https://axios-http.com/kr/docs/intro)
 - [![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black)](https://reactjs.org) [![CRA](https://img.shields.io/badge/Create%20React%20App-09D3AC?style=flat-square&logo=createreactapp&logoColor=white)](https://create-react-app.dev/) [![React Router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white)](https://reactrouter.com/en/main) [![Redux](https://img.shields.io/badge/Redux-%23764ABC?style=flat-square&logo=redux&logoColor=white
-)](https://react-redux.js.org/)
-- [![styled-components](https://img.shields.io/badge/styled%20components-DB7093?style=flat-square&logo=styledcomponents&logoColor=white)](https://styled-components.com/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
-- [React Portal](https://react.dev/reference/react-dom/createPortal)
-
+)](https://react-redux.js.org/) [![styled-components](https://img.shields.io/badge/styled%20components-DB7093?style=flat-square&logo=styledcomponents&logoColor=white)](https://styled-components.com/)
+- [Redux Toolkit](https://redux-toolkit.js.org/) & [React Portal](https://react.dev/reference/react-dom/createPortal)
 
 ## 🎥 데모
 <img alt="Demo" src="https://github.com/NarciSource/Pre-Onboarding-FE--post-assessment/assets/26417221/12371914-7558-443b-b58f-7bf818f50dc5" width="30%" />
@@ -53,7 +50,36 @@
 post-assessment
 ├─ .git
 ├─ .gitignore
-├─ mock-api
+├─ .gitmodules
+├─ express-server
+│  ├─ .env
+│  ├─ .git
+│  ├─ .gitignore
+│  ├─ app.js
+│  ├─ bin
+│  │  └─ www
+│  ├─ db
+│  │  ├─ dbClient.js
+│  │  ├─ dev.sqlite3
+│  │  └─ knexfile.js
+│  ├─ middlewares
+│  │  └─ cors-headers.js
+│  ├─ package-lock.json
+│  ├─ package.json
+│  ├─ README.md
+│  └─ routes
+│     └─ index.js
+├─ http-server
+│  ├─ .env
+│  ├─ .git
+│  ├─ .gitignore
+│  ├─ db.json
+│  ├─ index.js
+│  ├─ package-lock.json
+│  ├─ package.json
+│  └─ README.md
+├─ json-server
+│  ├─ .git
 │  ├─ .gitignore
 │  ├─ db.json
 │  ├─ package-lock.json

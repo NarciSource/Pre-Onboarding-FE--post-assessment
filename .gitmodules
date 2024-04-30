@@ -1,0 +1,12 @@
+[submodule "json-server"]
+	path = json-server
+	url = https://github.com/NarciSource/Pre-Onboarding-FE--post-assessment
+	branch = json-server
+[submodule "http-server"]
+	path = http-server
+	url = https://github.com/NarciSource/Pre-Onboarding-FE--post-assessment
+	branch = http-server
+[submodule "express-server"]
+	path = express-server
+	url = https://github.com/NarciSource/Pre-Onboarding-FE--post-assessment
+	branch = express-server

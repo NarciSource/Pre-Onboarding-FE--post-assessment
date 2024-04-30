@@ -2,50 +2,53 @@
 
 > 1주일 컨디션 체크 하기
 
-
 ## 🚩 목차
-- [🛠️ 기술 스택](#%EF%B8%8F-기술-스택)
-- [🎥 데모](#-데모)
-- [⚙️ 주요 기능](#%EF%B8%8F-주요-기능)
-- [🪝 사용한 리액트 훅](#-사용한-리액트-훅)
-- [🎨 UI](#-ui)
-- [📂 프로젝트 구조](#-프로젝트-구조)
-- [🚀 실행 방법](#-실행-방법)
+
+-   [🛠️ 기술 스택](#%EF%B8%8F-기술-스택)
+-   [🎥 데모](#-데모)
+-   [⚙️ 주요 기능](#%EF%B8%8F-주요-기능)
+-   [🪝 사용한 리액트 훅](#-사용한-리액트-훅)
+-   [🎨 UI](#-ui)
+-   [📂 프로젝트 구조](#-프로젝트-구조)
+-   [🚀 실행 방법](#-실행-방법)
 
 ## 🛠️ 기술 스택
-- ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![CSS](https://img.shields.io/badge/CSS3-%231572B6?style=flat-square&logo=css3&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-%23E34F26?style=flat-square&logo=html5&logoColor=white) [![Axios](https://img.shields.io/badge/Axios-%235A29E4?style=flat-square&logo=axios)](https://axios-http.com/kr/docs/intro)
-- [![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black)](https://reactjs.org) [![CRA](https://img.shields.io/badge/Create%20React%20App-09D3AC?style=flat-square&logo=createreactapp&logoColor=white)](https://create-react-app.dev/) [![React Router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white)](https://reactrouter.com/en/main) [![Redux](https://img.shields.io/badge/Redux-%23764ABC?style=flat-square&logo=redux&logoColor=white
-)](https://react-redux.js.org/) [![styled-components](https://img.shields.io/badge/styled%20components-DB7093?style=flat-square&logo=styledcomponents&logoColor=white)](https://styled-components.com/)
-- [Redux Toolkit](https://redux-toolkit.js.org/) & [React Portal](https://react.dev/reference/react-dom/createPortal)
+
+-   ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![CSS](https://img.shields.io/badge/CSS3-%231572B6?style=flat-square&logo=css3&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-%23E34F26?style=flat-square&logo=html5&logoColor=white) [![Axios](https://img.shields.io/badge/Axios-%235A29E4?style=flat-square&logo=axios)](https://axios-http.com/kr/docs/intro)
+-   [![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black)](https://reactjs.org) [![CRA](https://img.shields.io/badge/Create%20React%20App-09D3AC?style=flat-square&logo=createreactapp&logoColor=white)](https://create-react-app.dev/) [![React Router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white)](https://reactrouter.com/en/main) [![React Portal](https://img.shields.io/badge/React%20Portal-CA4245?style=flat-square)](https://react.dev/reference/react-dom/createPortal) [![Redux](https://img.shields.io/badge/Redux-%23764ABC?style=flat-square&logo=redux&logoColor=white)](https://react-redux.js.org/) [![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-%23764ABC?style=flat-square)](https://redux-toolkit.js.org/)
+-   [![styled-components](https://img.shields.io/badge/styled%20components-DB7093?style=flat-square&logo=styledcomponents&logoColor=white)](https://styled-components.com/)
 
 ## 🎥 데모
+
 <img alt="Demo" src="https://github.com/NarciSource/Pre-Onboarding-FE--post-assessment/assets/26417221/12371914-7558-443b-b58f-7bf818f50dc5" width="30%" />
 
 ## ⚙️ 주요 기능
 
-- 내 일주일 컨디션 리스트 페이지
-   - 오늘 요일이 가장 위로 옴
-- 컨디션 평점 매기기 페이지
-   - 별을 클릭하면 왼쪽부터 클릭한 별까지 별의 색상이 채워짐
-   - 저장하기를 누를 시 저장
-- Redux 상태관리 라이브러리를 사용하여 일주일 평점 관리
-- React-router-dom을 사용하여 네비게이션 처리
-- Mock-api를 사용해서 데이터를 관리
-- 이전주, 다음주를 추가로 보여줌
-- 키보드(1~5까지 숫자) 누름 이벤트 사용하여 평점 입력 가능
-- 평점 입력 후, 입력 되었다는 토스트를 보여줌
+-   내 일주일 컨디션 리스트 페이지
+    -   오늘 요일이 가장 위로 옴
+-   컨디션 평점 매기기 페이지
+    -   별을 클릭하면 왼쪽부터 클릭한 별까지 별의 색상이 채워짐
+    -   저장하기를 누를 시 저장
+-   Redux 상태관리 라이브러리를 사용하여 일주일 평점 관리
+-   React-router-dom을 사용하여 네비게이션 처리
+-   Mock-api를 사용해서 데이터를 관리
+-   이전주, 다음주를 추가로 보여줌
+-   키보드(1~5까지 숫자) 누름 이벤트 사용하여 평점 입력 가능
+-   평점 입력 후, 입력 되었다는 토스트를 보여줌
 
 ## 🪝 사용한 리액트 훅
 
-- React hooks - useState, useEffect, useImperativeHandle
-- React Redux hooks - useSelector, useDispatch
-- React Router hooks - useParams, useLocation, useNavigate
+-   React hooks - useState, useEffect, useImperativeHandle
+-   React Redux hooks - useSelector, useDispatch
+-   React Router hooks - useParams, useLocation, useNavigate
 
 ## 🎨 UI
+
 <img alt="리스트 페이지" src="https://github.com/NarciSource/Pre-Onboarding-FE--post-assessment/assets/26417221/08ae63bf-3b25-4a21-9e3a-6909ab8ecea9" width="30%" /> 
 <img alt="컨디션 평점 매기기 페이지" src="https://github.com/NarciSource/Pre-Onboarding-FE--post-assessment/assets/26417221/93af9042-ecd9-4ba5-8029-6702c67690d7" width="30%" />
 
 ## 📂 프로젝트 구조
+
 ```
 post-assessment
 ├─ .git
@@ -206,4 +209,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 #### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
